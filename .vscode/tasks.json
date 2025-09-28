@@ -21,7 +21,7 @@
     {
       "label": "cmake_init (unittest debug)",
       "type": "shell",
-      "command": "./scripts/cmake_init_unittest_debug.sh",
+      "command": "./scripts/cmake_init_unittest.sh",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -29,11 +29,10 @@
       "group": "build"
     },
     {
-      "label": "Execute-amd64",
+      "label": "Run all unittests",
       "type": "shell",
-      "command": "./scripts/execute-amd64.sh",
+      "command": "./scripts/exec_unittests.sh",
       "args": [
-        "7"
       ],
       "options": {
         "cwd": "${workspaceFolder}"
@@ -43,31 +42,10 @@
     {
       "label": "Run selected unittests",
       "type": "shell",
-      "command": "./scripts/execute_unittests.sh",
+      "command": "./scripts/exec_unittests.sh",
       "args": [
-        "--gtest_filter=gpcc_raii_scope_guard_Tests.Performance*"
+        "--gtest_filter=IpAddressV4_Test.InstantiateByString"
       ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Run all non-death-unittests",
-      "type": "shell",
-      "command": "./scripts/execute_unittests.sh",
-      "args": [
-        "--gtest_filter=-*Death*"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Run all non-death-unittests (memcheck)",
-      "type": "shell",
-      "command": "./scripts/execute_unittests_memcheck.sh",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -76,7 +54,7 @@
     {
       "label": "cmake_init (executable_debug)",
       "type": "shell",
-      "command": "./scripts/cmake_init_executable_debug.sh",
+      "command": "./scripts/cmake_init_target.sh",
       "options": {
           "cwd": "${workspaceFolder}"
       },
@@ -85,7 +63,7 @@
     {
       "label": "build (executable)",
       "type": "shell",
-      "command": "./scripts/build_executable.sh",
+      "command": "./scripts/build_target.sh",
       "args": [
           "all"
       ],
