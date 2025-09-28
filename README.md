@@ -1,15 +1,16 @@
-# HelloWorld
+# BasicStm32Project
 Development and maintenance of a first cmake based c++ build-project.
 
 # Important Note!
 This project contains submodules (source projects)!
-
 To checkout the build-project use:
-
-$ git clone --recurse-submodules \<URL\>
+  - $ git clone --recurse-submodules \<URL\>
 
 To initialize and fetch submodules after switching the build-project to a specific branch use:
+  - $ git submodule init
+  - $ git submodule update
 
-$ git submodule init
+# History
 
-$ git submodule update
+##1.0.0
+  - Initial Version
