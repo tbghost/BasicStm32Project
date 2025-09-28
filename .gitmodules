@@ -1,0 +1,11 @@
+# Adding a submodule googletest to the project
+# \Note: After checkout a project which included git submodules,\n
+# the submodules must added manual!
+# For example: Add googletest as git submodule to the project
+# On commandline at <project/rootdirectory> do write :
+#	'git submodule add https://github.com/google/googletest.git lib/googletest'
+# 'git submodule update --init --recursive'
+# Now the submodule has been added and is available 
+[submodule "googletest"]
+	path = lib/googletest
+	url = https://github.com/google/googletest.git

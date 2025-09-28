@@ -1,0 +1,113 @@
+{
+  "tasks": [
+    {
+      "label": "build (unittest)",
+      "type": "shell",
+      "command": "./scripts/build_unittest.sh",
+      "args": [
+        "all"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "cmake_init (unittest debug)",
+      "type": "shell",
+      "command": "./scripts/cmake_init_unittest_debug.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Execute-amd64",
+      "type": "shell",
+      "command": "./scripts/execute-amd64.sh",
+      "args": [
+        "7"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run selected unittests",
+      "type": "shell",
+      "command": "./scripts/execute_unittests.sh",
+      "args": [
+        "--gtest_filter=gpcc_raii_scope_guard_Tests.Performance*"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run all non-death-unittests",
+      "type": "shell",
+      "command": "./scripts/execute_unittests.sh",
+      "args": [
+        "--gtest_filter=-*Death*"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run all non-death-unittests (memcheck)",
+      "type": "shell",
+      "command": "./scripts/execute_unittests_memcheck.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "cmake_init (executable_debug)",
+      "type": "shell",
+      "command": "./scripts/cmake_init_executable_debug.sh",
+      "options": {
+          "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "build (executable)",
+      "type": "shell",
+      "command": "./scripts/build_executable.sh",
+      "args": [
+          "all"
+      ],
+      "options": {
+          "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+          "$gcc"
+      ]
+    },
+    {
+      "label": "clean all",
+      "type": "shell",
+      "command": "./scripts/clean_all.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build"
+      }
+    }
+  ],
+  "version": "2.0.0"
+}
