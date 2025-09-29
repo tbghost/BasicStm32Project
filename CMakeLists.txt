@@ -11,12 +11,22 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 # set Project properties
 set(PROJ_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-set(PRJNAME BasicProject)
+set(PRJNAME BasicStm32Project)
 set(MAJOR 1)
 set(MINOR 0)
 set(PATCH 0)
 set(PRJVERSION ${MAJOR}.${MINOR}.${PATCH})
 project(${PRJNAME} VERSION ${PRJVERSION})
+
+
+if(NOT DEFINED SW_ID)
+    set(SW_ID 10000)
+endif()
+
+if(NOT DEFINED HW_ID)
+    set(HW_ID 10000)
+endif()
+
 
 message (" ")
 message ("-- Entering ${PROJ_PATH}/CMakeLists.txt")
@@ -24,6 +34,8 @@ message ("-- ProjectName: ${PRJNAME}")
 message ("-- ProjectVersion (Major.Minor.Patch): ${PRJVERSION}")
 message ("-- Build type: ${CMAKE_BUILD_TYPE}")
 message ("-- Platform: ${PLATFORM}")
+message ("-- Hardware ID: ${HW_ID}")
+message ("-- Software ID: ${SW_ID}")
 message (" ")
 
 enable_language(C CXX ASM)
@@ -36,6 +48,8 @@ set(CMAKE_C_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
+
+
 
 if(${PLATFORM} STREQUAL "Baremetal")
     include(cmake/CMakeLists.Baremetal.cmake)
