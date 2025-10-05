@@ -6,6 +6,7 @@
 add_library(Utils 
             STATIC
             ${CMAKE_CURRENT_SOURCE_DIR}/IpAddressV4.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/Logger.cpp
             )
 
 
