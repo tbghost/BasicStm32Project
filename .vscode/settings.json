@@ -1,5 +1,5 @@
  {
-    "window.zoomLevel": -0.7,
+    "window.zoomLevel": -0.2,
     "window.title": "${rootName}${separator}${activeEditorShort}",
     "window.titleBarStyle": "default",
     "workbench.colorTheme": "Visual Studio 2017 Light - C++",
@@ -24,6 +24,7 @@
         "tab.activeBackground": "#f9fcff",
         "tab.inactiveBackground" "#e9f2fa",
         "tab.hoverBackground""#f9fcff",
+        "tab.border": "#576485",
         "tab.unfocusedActiveBackground": "#f9fcff",
         "tab.selectedBackground": "#f9fcff",
         "tab.selectedForeground": "#c5cdd4",
