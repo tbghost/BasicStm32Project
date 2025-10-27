@@ -80,12 +80,12 @@ list(APPEND compiler_options_asm "SHELL:-x assembler-with-cpp")   # enable prepr
 list(APPEND compiler_options_c   "")
 
 # Options for C++ only
-list(APPEND compiler_options_cxx "-fno-rtti"          #disables Run-Time Type Information (RTTI)
-                                 "-fexceptions"       #enables exception handling
+list(APPEND compiler_options_cxx "-fno-rtti"                #disables Run-Time Type Information (RTTI)
+                                 "-fexceptions"             #enables exception handling
                               )     
 
 # Options for all languages (ASM, C, C++)
-list(APPEND compiler_options_all "-mabi=aapcs"        # this flag ensures that the generated code adheres to the ARM application binary interface ABI conventions
+list(APPEND compiler_options_all "-mabi=aapcs"              # this flag ensures that the generated code adheres to the ARM application binary interface ABI conventions
                                  "-fomit-frame-pointer"     # omit the frame pointer for functions
                                  "-falign-functions=4"      # align functions to 4 bytes (32bit)
                                  "-ffunction-sections"      # place each function or data item into its own section in the output file
@@ -94,7 +94,8 @@ list(APPEND compiler_options_all "-mabi=aapcs"        # this flag ensures that t
                                  "-mno-sched-prolog")       # do not schedule the prologue and epilogue of functions
 
 # newlib specs (all languages and linker)
-list(APPEND specs_options        "-specs=nano.specs")       # use the newlib nano specs
+list(APPEND specs_options        "-specs=nano.specs"       # use the newlib nano specs
+                                 "-specs=nosys.specs")     # use the newlib nosys specs
 
 # Defines for ASM only
 list(APPEND compiler_defines_asm "")
