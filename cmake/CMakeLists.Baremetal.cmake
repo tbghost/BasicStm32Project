@@ -4,16 +4,29 @@
 # ===============================================================================
 
 ### platform baremetal ###
-message (" ")
-message ("-- Toolchain: ${TOOLCHAIN_PREFIX}")
-message ("-- Device: ${CHIP}")
-message (" ")
 
 set(EXECUTABLE ${PROJECT_NAME}.elf)
 
 ################################################################################
-# Global Flags
+# Global Flags and definitions
 ################################################################################
+math(EXPR FLASH_START "0x08000000" OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR FLASH_LENGTH "0x200000" OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR FLASH_END "${FLASH_START} + ${FLASH_LENGTH} - 1" OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR DATA_RAM_START "0x20000000" OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR DATA_RAM_LENGTH "0x20000" OUTPUT_FORMAT HEXADECIMAL)
+
+
+add_compile_definitions(FLASH_START=${FLASH_START})
+add_compile_definitions(FLASH_LENGTH=${FLASH_LENGTH})
+
+message (" ")
+message ("----------Device Identification---------------")     
+
+message ("-- Device:        ${CHIP}")
+message ("-- FLASH_START:   ${FLASH_START}")
+message ("-- FLASH_LENGTH:  ${FLASH_LENGTH}")
+message ("----------------------------------------------")     
 
 ################################################################################
 # Global Sources
@@ -56,7 +69,7 @@ target_link_libraries(${EXECUTABLE}
 set_target_properties(${EXECUTABLE} PROPERTIES
         LINKER_LANGUAGE CXX
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/output"
-        OUTPUT_NAME "executable"
+        OUTPUT_NAME "${PRJNAME}"
         SUFFIX ".elf"
        )        
         

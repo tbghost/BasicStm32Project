@@ -95,6 +95,8 @@ list(APPEND compiler_options_all "-mabi=aapcs"        # this flag ensures that t
 
 # newlib specs (all languages and linker)
 list(APPEND specs_options        "-specs=nano.specs")       # use the newlib nano specs
+list(APPEND specs_options        "-specs=nosys.specs")     # use the newlib nosys specs
+
 
 # Defines for ASM only
 list(APPEND compiler_defines_asm "")

@@ -1,42 +1,40 @@
- {
+{
     "window.zoomLevel": -0.2,
     "window.title": "${rootName}${separator}${activeEditorShort}",
-    "window.titleBarStyle": "default",
-    "workbench.colorTheme": "Visual Studio 2017 Light - C++",
+    "window.titleBarStyle": "custom",
+    "workbench.colorTheme": "Default Dark Modern",
     "workbench.colorCustomizations": {
         // BRACKET PAIR
-        "editorIndentGuide.activeBackground1": "#b8cacad2",
+        "editorIndentGuide.activeBackground1": "#1a3333d2",
         "editorIndentGuide.background1": "#2832365b",     
         // GIT LINES
         "editorGutter.addedBackground": "#00000000",
         "editorGutter.deletedBackground": "#00000000",
         "editorGutter.modifiedBackground": "#00000000",
-        "editor.background": "#edeff0e8",
+        "editor.background": "#040505",
         "editor.foreground": "default",
-        "editorGroupHeader.tabsBackground": "#cfcccc",
+        "editorGroupHeader.tabsBackground": "#080707",
         "editorGroupHeader.tabsBorder": "#6e6b6b",
         "editorGroup.border": "#215bd6",
-        "editor.foldBackground": "#c5cdd4",
-        "editor.lineHighlightBorder": "#d8d9db",
-        "editorWidget.background": "#c5cdd4",
+        "editor.foldBackground": "#151618",
+        "editor.lineHighlightBorder": "#18191b",
+        "editorWidget.background": "#0a0a0a",
         "editorWidget.border":"#454545",
-        "editor.wordHighlightTextBackground": "#c5cdd4",
-        "tab.activeBackground": "#f9fcff",
-        "tab.inactiveBackground": "#e9f2fa",
-        "tab.hoverBackground": "#f9fcff",
+        "editor.wordHighlightTextBackground": "#1f2327",
+        "tab.activeBackground": "#2a3f55",
         "tab.border": "#576485",
-        "tab.unfocusedActiveBackground": "#f9fcff",
-        "tab.selectedBackground": "#f9fcff",
-        "tab.selectedForeground": "#c5cdd4",
-        "titleBar.activeBackground": "#c5cdd4",
-        "titleBar.inactiveBackground": "#c5cdd4",
-        "activityBar.activeBackground": "#60727a",
-        "activityBar.background": "#878c91",
-        "terminal.background": "#141518",
-        "terminal.foreground": "#dedae7",
-        "sideBar.background": "#eceef2",
+        "tab.unfocusedActiveBackground": "#2a3f55",
+        "tab.selectedBackground": "#171a17",
+        "tab.selectedForeground": "#2a3f55",
+        "titleBar.activeBackground": "#272d33",
+        "titleBar.inactiveBackground": "#141618",
+        "activityBar.activeBackground": "#637460",
+        "activityBar.background": "#2C3E50",
+        "terminal.background": "#060707",
+        "terminal.foreground": "#9b92b1",
+        "sideBar.background": "#121a24",
         "sideBar.border": "#142549",
-        "scrollbarSlider.background": "#314355"
+        "scrollbarSlider.background": "#314355",
     },
     "editor.tokenColorCustomizations": 
     {
@@ -75,28 +73,15 @@
             }
         ],
         
-    },
+    },  
     "debug.showVariableTypes": true,
     "debug.openDebug": "openOnSessionStart",
     "debug.variablesView.showHex": true,
-    "search.exclude": {
-        "**/build": true,
-        "**/lib": true,
-        "**/doc": true
-        //"**/*.code-search": true
-    },
-    "files.exclude": {
-        "**/.git": false,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/.DS_Store": true,
-        "**/Thumbs.db": true
-    },
     "git.allowForcePush": true,
     "editor.fontFamily": "Cascadia Mono",
     "editor.fontLigatures": false,
     "editor.fontSize": 12,
-    "editor.tabSize": 4,
+    "editor.tabSize": 2,
     "editor.renderWhitespace": "none",
     "editor.minimap.enabled": false,
     "cortex-debug.armToolchainPath": "/home/toberg/tools/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/",
@@ -133,11 +118,6 @@
             "path": "C:\\DevApps\\Pwsh\\pwsh.exe"
             //"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
         }
-    },
-    "terminal.integrated.profiles.linux": {
-        "bash": {
-            "path": "/bin/bash"
-        },
     },
     "terminal.external.windowsExec": "C:\\DevApps\\Pwsh\\pwsh.exe",
     "terminal.integrated.automationProfile.windows": {

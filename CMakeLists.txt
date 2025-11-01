@@ -27,16 +27,79 @@ if(NOT DEFINED HW_ID)
     set(HW_ID 10000)
 endif()
 
+# add commit info git
+function(check_command cmd result_var)
+    execute_process(
+        COMMAND ${cmd} --version
+        RESULT_VARIABLE _git_check_vers
+        OUTPUT_QUIET
+        ERROR_QUIET
+    )
+    if (_git_check_vers EQUAL 0)
+        set(${result_var} TRUE PARENT_SCOPE)
+    else()
+        set(${result_var} FALSE PARENT_SCOPE)
+    endif()
+endfunction()
+
+check_command(git HAS_GIT)
+if(HAS_GIT)
+    message (" ")
+    message("------------ Git Identification --------------")
+    #branch 
+    execute_process(
+        COMMAND git rev-parse --abbrev-ref HEAD
+        OUTPUT_VARIABLE GIT_COMMIT_BRANCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    message("BRANCH: ${GIT_COMMIT_BRANCH}")          
+
+    #first 8 nibbles of git-hash 
+    execute_process(
+        COMMAND git rev-parse --short=8 HEAD
+        OUTPUT_VARIABLE GIT_COMMIT_HASH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    message("HASH: ${GIT_COMMIT_HASH}")        
+    
+    #commit message 
+    execute_process(
+        COMMAND git log -1 --pretty=oneline --abbrev-commit
+        OUTPUT_VARIABLE GIT_COMMIT_MSG
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    message("MSG: ${GIT_COMMIT_MSG}")   
+    message("----------------------------------------------")     
+   
+    set(GIT_BRANCH ${GIT_COMMIT_BRANCH} CACHE INTERNAL "Git current branch")
+    set(GIT_HASH   ${GIT_COMMIT_HASH} CACHE INTERNAL "Git commit hash")
+    set(GIT_MSG    ${GIT_COMMIT_MSG} CACHE INTERNAL "Git commit message")
+else()
+    # dummy commit info
+    set(GIT_BRANCH "Unknown" CACHE INTERNAL "Git current branch")
+    set(GIT_HASH   "Unknown" CACHE INTERNAL "Git commit hash")
+    set(GIT_MSG    "Unknown" CACHE INTERNAL "Git commit message")
+endif()
+
+# add cmake variables for using in source code
+add_definitions(-DGIT_BRANCH="${GIT_BRANCH}" )
+add_definitions(-DGIT_HASH="${GIT_HASH}" )
+add_definitions(-DGIT_MSGBRANCH="${GIT_MSG}" )
+add_definitions(-DSW_RELEASE="${PRJVERSION}" )
+add_definitions(-DSW_ID="${SW_ID}" )
+add_definitions(-DHW_ID="${HW_ID}" )
 
 message (" ")
+message ("------------ Project Identification ----------")     
 message ("-- Entering ${PROJ_PATH}/CMakeLists.txt")
 message ("-- ProjectName: ${PRJNAME}")
 message ("-- ProjectVersion (Major.Minor.Patch): ${PRJVERSION}")
-message ("-- Build type: ${CMAKE_BUILD_TYPE}")
-message ("-- Platform: ${PLATFORM}")
 message ("-- Hardware ID: ${HW_ID}")
 message ("-- Software ID: ${SW_ID}")
-message (" ")
+message ("-- Build type: ${CMAKE_BUILD_TYPE}")
+message ("-- Platform: ${PLATFORM}")
+message ("-- Toolchain: ${TOOLCHAIN_PREFIX}")
+message ("----------------------------------------------")     
 
 enable_language(C CXX ASM)
 
@@ -48,8 +111,6 @@ set(CMAKE_C_EXTENSIONS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
-
-
 
 if(${PLATFORM} STREQUAL "Baremetal")
     include(cmake/CMakeLists.Baremetal.cmake)

@@ -1,5 +1,5 @@
  {
-    "window.zoomLevel": -0.7,
+    "window.zoomLevel": -0.2,
     "window.title": "${rootName}${separator}${activeEditorShort}",
     "window.titleBarStyle": "default",
     "workbench.colorTheme": "Visual Studio 2017 Light - C++",
@@ -36,21 +36,60 @@
         "terminal.foreground": "#514d5a",
         "sideBar.background": "#eceef2",
         "sideBar.border": "#142549",
-        "scrollbarSlider.background": "#c5cdd4",
+        "scrollbarSlider.background": "#314355"
+    },
+    "editor.tokenColorCustomizations": 
+    {
+        "textMateRules": [
+            {
+                "scope": "keyword.directive.assembly",
+                "settings": { "foreground": "#0000FF" } // Blau für Direktiven
+            },
+            {
+                "scope": "comment.line.double-slash.assembly",
+                "settings": { "foreground": "#008000" } // Grün für Kommentare
+            },
+            {
+                "scope": "entity.name.label.assembly",
+                "settings": { "foreground": "#FFD700" } // Gelb für Labels
+            },
+            {
+                "scope": "constant.numeric.hex.assembly",
+                "settings": { "foreground": "#800080" } // Lila für Hex-Werte
+            },
+            {
+                "scope": "keyword.control.ld",
+                "settings": { "foreground": "#0000FF" } // Blau für Schlüsselwörter
+            },
+            {
+                "scope": "comment.block.ld",
+                "settings": { "foreground": "#008000" } // Grün für Kommentare
+            },
+            {
+                "scope": "entity.name.section.ld",
+                "settings": { "foreground": "#FFD700" } // Gelb für Sektionen
+            },
+            {
+                "scope": "constant.numeric.hex.ld",
+                "settings": { "foreground": "#800080" } // Lila für Hex-Werte
+            }
+        ],
+        
     },
     "debug.showVariableTypes": true,
-    "debug.openDebug": "openOnSessionStart"{
-        "type": "setting",
-        "settings": {
-            "debug.variablesView.showHex": true
-        }   
-    },
+    "debug.openDebug": "openOnSessionStart",
+    "debug.variablesView.showHex": true,
+    "git.allowForcePush": true,
     "editor.fontFamily": "Cascadia Mono",
     "editor.fontLigatures": false,
     "editor.fontSize": 12,
     "editor.tabSize": 2,
     "editor.renderWhitespace": "none",
     "editor.minimap.enabled": false,
+    "cortex-debug.armToolchainPath": "/home/toberg/tools/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/",
+    "cortex-debug.gdbPath": "/home/toberg/tools/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gdb",
+    "cortex-debug.JLinkGDBServerPath": "/opt/SEGGER/JLink/JLinkGDBServerCLExe",
+    "cortex-debug.stlinkPath": "/opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.stlink-gdb-server.linux64_2.2.200.202505060755/tools/bin/ST-LINK_gdbserver",
     "security.workspace.trust.untrustedFiles": "open",
     "terminal.fontFamily": "Cascadia Mono",
     "terminal.integrated.splitCwd": "workspaceRoot",
@@ -185,11 +224,6 @@
         "numeric": "cpp",
         "regex": "cpp"
     },
-    //"sonarlint.pathToCompileCommands": "${workspaceFolder}\\output\\build\\win\\compile_cmds.json",
-    //"sonarlint.connectedMode.project": {
-    //    "connectionId": "",
-    //    "projectKey": ""
-    //},
     "cmake.configureOnOpen": false,
     "cmake.configureArgs": [
         "-DCMAKE_BUILD_KIT=${buildKit}",

@@ -13,10 +13,7 @@
       "problemMatcher": [
         "$gcc"
       ],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
+      "group": "build"
     },
     {
       "label": "cmake_init (unittest debug)",
@@ -32,8 +29,7 @@
       "label": "Run all unittests",
       "type": "shell",
       "command": "./scripts/exec_unittests.sh",
-      "args": [
-      ],
+      "args": [],
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -56,7 +52,7 @@
       "type": "shell",
       "command": "./scripts/cmake_init_target.sh",
       "options": {
-          "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}"
       },
       "problemMatcher": []
     },
@@ -64,15 +60,17 @@
       "label": "build (executable)",
       "type": "shell",
       "command": "./scripts/build_target.sh",
-      "args": [
-          "all"
-      ],
+      "args": [],
       "options": {
-          "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}"
       },
       "problemMatcher": [
-          "$gcc"
-      ]
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
     },
     {
       "label": "clean all",
