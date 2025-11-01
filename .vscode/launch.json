@@ -5,6 +5,25 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "STM32 Debug (ST-Link)",
+      "cwd": "${workspaceFolder}",
+      "armToolchainPath": "/home/toberg/tools/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/",
+      "executable": "${workspaceFolder}/build/output/BasicStm32Project.elf",
+      "request": "launch",
+      "type": "cortex-debug",
+      "servertype": "stutil",
+      "device": "STM32H743ZI",
+      "interface": "swd",
+      "runToEntryPoint": "Reset_Handler",
+      "showDevDebugOutput": "raw",
+      "showDevDebugTimestamps": true,
+      "svdFile": "${workspaceFolder}/target/st_link/STM32H743.svd",
+      "preLaunchTask": "build (executable)",
+      "postLaunchCommands": [
+          "monitor reset"
+      ]
+    },
+    {
       "name": "Debug (unittests)",
       "type":"cppdbg",
       "request": "launch",

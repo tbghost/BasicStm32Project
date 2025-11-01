@@ -22,8 +22,8 @@
         "editorWidget.border":"#454545",
         "editor.wordHighlightTextBackground": "#c5cdd4",
         "tab.activeBackground": "#f9fcff",
-        "tab.inactiveBackground" "#e9f2fa",
-        "tab.hoverBackground""#f9fcff",
+        "tab.inactiveBackground": "#e9f2fa",
+        "tab.hoverBackground": "#f9fcff",
         "tab.border": "#576485",
         "tab.unfocusedActiveBackground": "#f9fcff",
         "tab.selectedBackground": "#f9fcff",
@@ -33,10 +33,10 @@
         "activityBar.activeBackground": "#60727a",
         "activityBar.background": "#878c91",
         "terminal.background": "#141518",
-        "terminal.foreground": "#514d5a",
+        "terminal.foreground": "#dedae7",
         "sideBar.background": "#eceef2",
         "sideBar.border": "#142549",
-        "scrollbarSlider.background": "#c5cdd4",
+        "scrollbarSlider.background": "#314355"
     },
     "editor.tokenColorCustomizations": 
     {
@@ -75,17 +75,34 @@
             }
         ],
         
-    },  
+    },
     "debug.showVariableTypes": true,
     "debug.openDebug": "openOnSessionStart",
     "debug.variablesView.showHex": true,
+    "search.exclude": {
+        "**/build": true,
+        "**/lib": true,
+        "**/doc": true
+        //"**/*.code-search": true
+    },
+    "files.exclude": {
+        "**/.git": false,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
     "git.allowForcePush": true,
     "editor.fontFamily": "Cascadia Mono",
     "editor.fontLigatures": false,
     "editor.fontSize": 12,
-    "editor.tabSize": 2,
+    "editor.tabSize": 4,
     "editor.renderWhitespace": "none",
     "editor.minimap.enabled": false,
+    "cortex-debug.armToolchainPath": "/home/toberg/tools/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/",
+    "cortex-debug.gdbPath": "/home/toberg/tools/arm-gnu-toolchain-14.3.rel1-x86_64-arm-none-eabi/bin/arm-none-eabi-gdb",
+    "cortex-debug.JLinkGDBServerPath": "/opt/SEGGER/JLink/JLinkGDBServerCLExe",
+    "cortex-debug.stlinkPath": "/opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.stlink-gdb-server.linux64_2.2.200.202505060755/tools/bin/ST-LINK_gdbserver",
     "security.workspace.trust.untrustedFiles": "open",
     "terminal.fontFamily": "Cascadia Mono",
     "terminal.integrated.splitCwd": "workspaceRoot",
@@ -116,6 +133,11 @@
             "path": "C:\\DevApps\\Pwsh\\pwsh.exe"
             //"C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
         }
+    },
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/bin/bash"
+        },
     },
     "terminal.external.windowsExec": "C:\\DevApps\\Pwsh\\pwsh.exe",
     "terminal.integrated.automationProfile.windows": {
@@ -222,8 +244,8 @@
     },
     "cmake.configureOnOpen": false,
     "cmake.configureArgs": [
-        "-DCMAKE_BUILD_KIT=${buildKit}"
+        "-DCMAKE_BUILD_KIT=${buildKit}",
     ],
     "cmake.sourceDirectory": "${workspaceFolder}/.",
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
 }
