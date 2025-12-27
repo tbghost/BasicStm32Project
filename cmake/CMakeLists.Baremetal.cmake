@@ -64,6 +64,7 @@ add_executable(${EXECUTABLE} ${SOURCES})
 target_link_libraries(${EXECUTABLE}
           Utils
           HAL          
+          threadx
           )
 
 set_target_properties(${EXECUTABLE} PROPERTIES

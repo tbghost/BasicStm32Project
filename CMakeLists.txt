@@ -112,8 +112,28 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
+
 if(${PLATFORM} STREQUAL "Baremetal")
+    
+    # add threadx os library
+    add_library(threadx STATIC)
+    target_sources(threadx PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_initialize_kernel_enter.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_thread_create.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_thread_resume.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_thread_sleep.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_mutex_create.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_semaphore_create.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/startup/tx_initialize_low_level.S
+        )
+    target_include_directories(threadx PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/inc
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/inc
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/config
+    )
+    
     include(cmake/CMakeLists.Baremetal.cmake)
+
 elseif(${PLATFORM} STREQUAL "Unittest")
     include(cmake/CMakeLists.Unittest.cmake)
 else()
