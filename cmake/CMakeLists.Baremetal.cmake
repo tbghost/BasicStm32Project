@@ -33,6 +33,8 @@ message ("----------------------------------------------")
 ################################################################################
 set(SOURCES 
     ${CMAKE_SOURCE_DIR}/hal/main.cpp
+    ${CMAKE_SOURCE_DIR}/os/posix/posix.cpp
+    ${CMAKE_SOURCE_DIR}/os/posix/time.cpp
     #${CMAKE_SOURCE_DIR}/hal/startup/startup_stm32h743zitx.s
     )
 ################################################################################
@@ -41,6 +43,7 @@ set(SOURCES
 include_directories(
     ${CMAKE_SOURCE_DIR}/os/threadx/common/inc
     ${CMAKE_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/inc
+    ${CMAKE_SOURCE_DIR}/os/posix
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/utils
     ${CMAKE_SOURCE_DIR}/hal

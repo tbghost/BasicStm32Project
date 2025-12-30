@@ -3,6 +3,7 @@
 
 extern "C" {
 #include "tx_api.h"
+#include "posix.hpp"
 
 /* ThreadX low-level initialization function */
 void _tx_initialize_low_level(void)
@@ -15,12 +16,12 @@ void _tx_initialize_low_level(void)
 }
 
 /**
- * @brief Main application thread function
+ * @brief Main application thread function using POSIX interface
  * Runs the main application logic in ThreadX context
  */
-void main_app_thread_entry(ULONG thread_input)
+void main_app_thread_entry(void* arg)
 {
-    (void)thread_input;
+    (void)arg;
     
     /* Main application loop */
     while(1)
@@ -28,8 +29,8 @@ void main_app_thread_entry(ULONG thread_input)
         /* Application code runs here */
         /* For example: blink LED, process data, etc. */
         
-        /* Yield to other threads */
-        tx_thread_sleep(100);
+        /* Yield to other threads - POSIX compatible sleep */
+        usleep(100000);  /* 100 ms in microseconds */
     }
 }
 
@@ -39,23 +40,16 @@ void main_app_thread_entry(ULONG thread_input)
  */
 void tx_application_define(void *first_unused_memory)
 {
-    static TX_THREAD mainAppThread;
-    static uint8_t mainAppStack[2048];
+    static pthread_t mainAppThread;
     
     (void)first_unused_memory;
     
-    /* Create the main application thread */
-    tx_thread_create(
-        &mainAppThread,                          /* Thread control block */
-        "Main App Thread",                       /* Thread name */
-        main_app_thread_entry,                   /* Thread entry point */
-        0,                                       /* Thread input */
-        mainAppStack,                            /* Stack pointer */
-        sizeof(mainAppStack),                    /* Stack size */
-        16,                                      /* Priority */
-        16,                                      /* Preempt threshold */
-        TX_NO_TIME_SLICE,                        /* No time slicing */
-        TX_AUTO_START                            /* Auto-start */
+    /* Create the main application thread using POSIX interface */
+    pthread_create(
+        &mainAppThread,           /* Thread handle */
+        NULL,                     /* Thread attributes (not used) */
+        main_app_thread_entry,    /* Thread entry point */
+        NULL                      /* Thread argument */
     );
 }
 
