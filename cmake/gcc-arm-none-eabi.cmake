@@ -66,11 +66,11 @@ list(APPEND compiler_options_warn_and_err_cxx "-Wall"                   # enable
 ###############################################################
 # Global compiler options related to target CPU configuration
 ###############################################################
-list(APPEND target_cpu_conf "-mcpu=cortex-m7+nofp"          # CPU
+list(APPEND target_cpu_conf "-mcpu=cortex-m7"               # CPU
                             "-mthumb")                      # Thumb-Instruction-Set
 
-list(APPEND target_vfp_conf "-mfloat-abi=soft"              # use software floating point   
-                            #"-mfpu=fpv5-d16"               # use floating arithmetic unit             
+list(APPEND target_vfp_conf "-mfloat-abi=hard"              # use hardware floating point   
+                            "-mfpu=fpv5-d16"                # use floating arithmetic unit             
                             )
 
 # Options for ASM only
@@ -82,6 +82,7 @@ list(APPEND compiler_options_c   "")
 # Options for C++ only
 list(APPEND compiler_options_cxx "-fno-rtti"                #disables Run-Time Type Information (RTTI)
                                  "-fexceptions"             #enables exception handling
+                                 "-std=gnu++17"
                               )     
 
 # Options for all languages (ASM, C, C++)

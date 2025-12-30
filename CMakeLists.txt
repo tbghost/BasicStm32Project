@@ -115,17 +115,27 @@ set(CMAKE_CXX_EXTENSIONS ON)
 
 if(${PLATFORM} STREQUAL "Baremetal")
     
-    # add threadx os library
+    # add threadx os library - include all common source files
+    file(GLOB THREADX_SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_*.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/txe_*.c"
+    )
+    
     add_library(threadx STATIC)
     target_sources(threadx PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_initialize_kernel_enter.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_thread_create.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_thread_resume.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_thread_sleep.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_mutex_create.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/src/tx_semaphore_create.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/os/startup/tx_initialize_low_level.S
-        )
+        ${THREADX_SOURCES}
+        # Cortex-M7 architecture-specific (assembly)
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_misra.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_context_restore.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_context_save.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_interrupt_control.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_interrupt_disable.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_interrupt_restore.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_schedule.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_stack_build.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_thread_system_return.S
+        ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/src/tx_timer_interrupt.S
+    )
     target_include_directories(threadx PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/common/inc
         ${CMAKE_CURRENT_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/inc

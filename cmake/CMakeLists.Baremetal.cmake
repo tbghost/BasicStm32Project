@@ -39,18 +39,22 @@ set(SOURCES
 # Global Includes
 ################################################################################
 include_directories(
+    ${CMAKE_SOURCE_DIR}/os/threadx/common/inc
+    ${CMAKE_SOURCE_DIR}/os/threadx/ports/cortex_m7/gnu/inc
     ${CMAKE_SOURCE_DIR}/src
     ${CMAKE_SOURCE_DIR}/src/utils
     ${CMAKE_SOURCE_DIR}/hal
     ${CMAKE_SOURCE_DIR}/hal/cmsis
     ${CMAKE_SOURCE_DIR}/hal/hal_driver
     ${CMAKE_SOURCE_DIR}/hal/startup
+    ${CMAKE_SOURCE_DIR}/os/config
     )
 ################################################################################
 # Add the subdirectories which includes used libs with own CmakeLists.txt
 ################################################################################
 add_subdirectory(src/utils)
 add_subdirectory(hal)
+
 
 # add executable 
 add_executable(${EXECUTABLE} ${SOURCES})
@@ -61,7 +65,7 @@ add_executable(${EXECUTABLE} ${SOURCES})
 #            )
 
 #libraries
-target_link_libraries(${EXECUTABLE}
+target_link_libraries(${EXECUTABLE} PRIVATE
           Utils
           HAL          
           threadx
