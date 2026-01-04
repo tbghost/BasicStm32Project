@@ -63,11 +63,9 @@ int main()
   /* Enter ThreadX kernel */
   tx_kernel_enter();
   
+  /* If tx_kernel_enter() returns, something went wrong */
+  error_handler_reset(ERROR_THREADX_INIT_FAILED);
+  
   /* This line should never be reached */
   return 0;
 }
-//void Error_Handler() {
-//    while (1) {
-//        // Fehlerbehandlung
-//    }
-//}

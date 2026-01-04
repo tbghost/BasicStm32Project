@@ -15,6 +15,7 @@ set(SYSTEM_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/system/sysmem.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/system_stm32h7xx.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/hal_init.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/system/error_handler.cpp
     
     )
 

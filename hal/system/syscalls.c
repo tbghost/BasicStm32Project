@@ -148,7 +148,7 @@ int _isatty(int file)
 	return 1;
 }
 
-int _lseek(int file, int ptr, int dir)
+__attribute__((weak)) int _lseek(int file, int ptr, int dir)
 {
 	(void) file;
 	(void) ptr;

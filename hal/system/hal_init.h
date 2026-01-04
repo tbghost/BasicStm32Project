@@ -71,6 +71,7 @@ extern "C" {
 void hal_init(void);
 
 /* USER CODE BEGIN EFP */
+#include "error_handler.h"
 
 /* USER CODE END EFP */
 

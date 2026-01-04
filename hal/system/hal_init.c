@@ -9,6 +9,7 @@
 
 /* Includes */
 #include "hal_init.h"
+#include "error_handler.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +25,9 @@ void hal_init(void)
 {
     //uint8_t state, cmd, len;
 
+    /* Initialize error handler first */
+    error_handler_init();
+
     /* MCU Configuration */
 //    SCB_DisableDCache();
 //    SCB_DisableICache();
@@ -33,7 +37,6 @@ void hal_init(void)
 
     /* Configure the system clock */
     SystemClock_Config();
-
 }
 
 

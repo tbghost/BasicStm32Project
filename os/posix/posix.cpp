@@ -15,8 +15,8 @@ int pthread_create(pthread_t* t, void*, void (*fn)(void*), void* arg)
     pthread_count++;
     
     return tx_thread_create(t,  
-                            "pthread",
-                            (void (*)(ULONG))fn,
+                            (CHAR*)"pthread",
+                            (void (*)(ULONG))(void*)fn,
                             (ULONG)arg,
                             stack,
                             sizeof(pthread_stacks[0]),
