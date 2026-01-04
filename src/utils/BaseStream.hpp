@@ -61,7 +61,6 @@ namespace Utils
         */
         BaseStream(IStream::StreamType const type, IStream::ByteOrder const endianness, uint8_t* const data, uint16_t const len); 
        
-        BaseStream& operator=(BaseStream const&) = delete;              //!< none copy constructor
         BaseStream(BaseStream const&) = delete;              //!< none copy constructor
         BaseStream(BaseStream&&) = delete;                   //!< none move constructor
         
@@ -70,12 +69,14 @@ namespace Utils
         */ 
         ~BaseStream() = default;
 
-        //BaseStream& operator=(BaseStream const&) = delete;   //!< none copy operator
-        //BaseStream& operator=(BaseStream&&) = delete;        //!< none move operator
+        BaseStream& operator=(BaseStream const&) = delete;   //!< none copy operator
+        BaseStream& operator=(BaseStream&&) = delete;        //!< none move operator
         
         /// @copydoc IStream::GetHeader
         IStream::StreamHeader GetHeader() const override; 
-        
+
+        /// @copydoc IStream::GetData
+        IStream::StreamHeader GetData() const override; 
 
 
     private:

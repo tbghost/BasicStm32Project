@@ -34,12 +34,13 @@ namespace Utils
 * - - -
 *
 *
-*/ class IStream
+*/ 
+class IStream
 {
     public:
 
         /// @brief Length of a Stream header in bytes 
-        static constexpr uint8_t HEADERLENGTH{4U};   
+        static constexpr uint8_t HEADERLENGTH{8U};   
         
         /// @brief Maximum Length of Stream data in bytes 
         static constexpr uint16_t MAXDATALENGTH{1024U};   
@@ -67,7 +68,9 @@ namespace Utils
         {
             StreamType  type{StreamType::GENERIC};          //!< Type of the Stream
             ByteOrder   endianness{ByteOrder::LENDIAN};     //!< Endianness of the Stream data
-            uint16_t    length{0u};                         //!< Length of the Stream data in bytes
+            uint16_t    flags{0u};                          //!< flags of the stream object
+            uint16_t    length{0u};                         //!< Length of the stream data in bytes
+            uint16_t    crc{0u};                            //!< 16 bit CRC of the stream data arround the length
         };
         
         /**
@@ -84,7 +87,19 @@ namespace Utils
         */ 
         virtual IStream::StreamHeader GetHeader() const = 0; 
         
-
+        /**
+        * @fn IStream::GetData
+        * @brief This method provides a pointer to the first data byte.\n
+        * - - - 
+        * 
+        * __Thread safety:__ 
+        * The access to this object is not thread safe.
+        * 
+        * - - -
+        * @return Ptr to stream data.
+        * 
+        */ 
+        virtual IStream::StreamHeader GetData() const = 0; 
     //    /**
     //    * @brief This Method creates and get back the ownership of a serialized stream object on heap.\n
     //    * @verbatim
