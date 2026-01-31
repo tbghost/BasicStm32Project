@@ -4,13 +4,14 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") # <- workaround for bug 
 
 # Compiler und Toolchain-Spezifikationen
 set(CHIP "STM32H743xx")
-set(CMAKE_SYSTEM_NAME Generic)                 # Kein Betriebssystem (bare-metal)
-set(CMAKE_SYSTEM_PROCESSOR cortex-m7+nofp)     # Zielprozessor ist ARM
-set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY) # Verhindert, dass CMake ausführbare Dateien testet
+set(CMAKE_SYSTEM_NAME Generic)                        # Kein Betriebssystem (bare-metal)
+set(CMAKE_SYSTEM_PROCESSOR cortex-m7)                 # Zielprozessor ist ARM
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)     # Verhindert, dass CMake ausführbare Dateien testet
 
 
 # Pfad zum linkerfile
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/hal/startup/STM32H743ZITX_FLASH.ld)
+#set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/hal/startup/STM32H743ZITX_FLASH.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/hal/startup/stm32h7_linkerscript.ld)
 
 # Pfad zur ARM-Toolchain (anpassen, falls nötig)
 set(TOOLCHAIN_PREFIX arm-none-eabi)
@@ -124,8 +125,8 @@ list(APPEND linker_options       "-Wl,--gc-sections"        # remove unused sect
 # ---------------------------------------------------------------------------------------------------------------------
 add_compile_options("${target_cpu_conf}"
                     "${target_vfp_conf}"
-                    "$<$<CONFIG:CUSTOM_DEBUG>:${compiler_options_debug}>"
-                    "$<$<NOT:$<CONFIG:CUSTOM_DEBUG>>:${compiler_options_release}>"
+                    "$<$<CONFIG:Debug>:${compiler_options_debug}>"
+                    "$<$<NOT:$<CONFIG:Debug>>:${compiler_options_release}>"
                     "$<$<COMPILE_LANGUAGE:ASM>:${compiler_options_asm}>"
                     "$<$<COMPILE_LANGUAGE:C>:${compiler_options_c}>"
                     "$<$<COMPILE_LANGUAGE:C>:${compiler_options_warn_and_err_c}>"
@@ -135,8 +136,8 @@ add_compile_options("${target_cpu_conf}"
                     "${specs_options}"
                     )
 
-add_compile_definitions("$<$<CONFIG:CUSTOM_DEBUG>:${compiler_defines_debug}>"
-                        "$<$<NOT:$<CONFIG:CUSTOM_DEBUG>>:${compiler_defines_release}>"
+add_compile_definitions("$<$<CONFIG:Debug>:${compiler_defines_debug}>"
+                        "$<$<NOT:$<CONFIG:Debug>>:${compiler_defines_release}>"
                         "$<$<COMPILE_LANGUAGE:ASM>:${compiler_defines_asm}>"
                         "$<$<COMPILE_LANGUAGE:C>:${compiler_defines_c}>"
                         "$<$<COMPILE_LANGUAGE:CXX>:${compiler_defines_cxx}>"

@@ -1,7 +1,7 @@
 # Define STM32 Target
 set(STM32_CHIP STM32H743) # Beispiel: STM32F407 für STM32F4-Serie
 set(STM32_HAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/target/hal/HAL_Drivers) # HAL/CMSIS Pfad
-set(LINKER_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/target/STM32H743ZITX_FLASH.ld)   # Linker-Skript
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/hal/startup/stm32h7_linkerscript.ld)   # Linker-Skript
 
 #
 # Core MCU flags, CPU, instruction set and FPU setup

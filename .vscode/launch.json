@@ -14,14 +14,16 @@
       "servertype": "stutil",
       "device": "STM32H743ZI",
       "interface": "swd",
-      "runToEntryPoint": "Reset_Handler",
+      //"runToEntryPoint": "Reset_Handler",
+      "runToEntryPoint": "IsrReset",
+      "stopAtEntry": true,
       "showDevDebugOutput": "raw",
       "showDevDebugTimestamps": true,
       "svdFile": "${workspaceFolder}/target/st_link/STM32H743.svd",
-      "preLaunchTask": "build (executable)",
-      "postLaunchCommands": [
-          "monitor reset"
-      ]
+      //"preLaunchTask": "build (executable)",
+      //"postLaunchCommands": [
+      //    "monitor reset"
+      //]
     },
     {
       "name": "Debug (unittests)",
