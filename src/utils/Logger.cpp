@@ -4,50 +4,154 @@
  * 
  * @namespace   Utils
  * 
- * @brief       Utils, Logsystem implementation.
+ * @brief       Implementation of lock-free ISR-safe Logger
  * 
  * @author      toberg
  * 
- * @date        2024/12/07
-********************************************************************************/
+ * @date        2026/01/31
+ ********************************************************************************/
 
-//#include "Logger.hpp"
-//
-//using namespace Utils;
-//
-//void Logger::writeBytes(size_t index, const uint8_t* data, size_t len)
-//{
-//    size_t firstPart = std::min(len, BUFFER_CAPACITY - index);
-//    std::memcpy(&buffer[index], data, firstPart);
-//    if (len > firstPart)
-//    {
-//        std::memcpy(&buffer[0], data + firstPart, len - firstPart);
-//    }
-//}
-//
-//explicit Logger::Logger(LogLevel suppLevel)
-//: head(0) 
-//, tail(0)
-//, running(true)
-//, mSuppLevel(suppLevel)
-//{
-//    consoleFd = open("/dev/console", O_RDWR);
-//    if (consoleFd < 0) consoleFd = 1; // fallback stdout
-//    pthread_create(&thread, nullptr, &Logger::ThreadEntry, this);
-//}
-//
-//
-//Logger::~Logger()
-//{
-//    running = false;
-//    pthread_join(thread, nullptr);
-//    if (consoleFd > 2) close(consoleFd);
-//}
-//
-//void Logger::Log(LogLevel level, const char *msg)
-//{
-//    if (level < minLevel) 
-//    {
+#include "Logger.hpp"
+#include <cstring>
+
+namespace Utils {
+
+// Static member initialization
+std::array<Message, Logger::BUFFER_SIZE> Logger::buffer;
+Logger Logger::instance;
+
+Logger::Logger() 
+    : writePtr(0), readPtr(0), overflowFlag(false), totalWritten(0), totalLost(0)
+{
+}
+
+void Logger::init()
+{
+    // Singleton initialization - called once at startup
+    getInstance();
+}
+
+Logger& Logger::getInstance()
+{
+    return instance;
+}
+
+void Logger::debug(const char* text)
+{
+    getInstance().writeMessage(LogLevel::DEBUG, text);
+}
+
+void Logger::info(const char* text)
+{
+    getInstance().writeMessage(LogLevel::INFO, text);
+}
+
+void Logger::warn(const char* text)
+{
+    getInstance().writeMessage(LogLevel::WARN, text);
+}
+
+void Logger::error(const char* text)
+{
+    getInstance().writeMessage(LogLevel::ERROR, text);
+}
+
+void Logger::critical(const char* text)
+{
+    getInstance().writeMessage(LogLevel::CRITICAL, text);
+}
+
+void Logger::writeMessage(LogLevel level, const char* text)
+{
+    if (!text) {
+        return;
+    }
+    
+    // Load current pointers (atomic, acquire semantics not needed for write-only)
+    uint16_t wp = writePtr.load(std::memory_order_relaxed);
+    uint16_t rp = readPtr.load(std::memory_order_acquire);
+    
+    // Check if buffer is full
+    uint16_t nextWp = (wp + 1) % BUFFER_SIZE;
+    if (nextWp == rp) {
+        // Buffer full - overflow
+        overflowFlag.store(true, std::memory_order_release);
+        totalLost.fetch_add(1, std::memory_order_relaxed);
+        return;
+    }
+    
+    // Write message to buffer
+    Message& msg = buffer[wp];
+    msg.level = level;
+    msg.timestamp = 0;  // Could use HAL tick counter here
+    
+    // Copy text safely (limit to MAX_TEXT_LEN)
+    uint16_t len = static_cast<uint16_t>(strlen(text));
+    if (len >= Message::MAX_TEXT_LEN) {
+        len = Message::MAX_TEXT_LEN - 1;
+    }
+    std::memcpy(msg.text, text, len);
+    msg.text[len] = '\0';
+    
+    // Update write pointer (release semantics to ensure message is visible)
+    writePtr.store(nextWp, std::memory_order_release);
+    totalWritten.fetch_add(1, std::memory_order_relaxed);
+}
+
+bool Logger::readMessage(Message& msg)
+{
+    uint16_t rp = readPtr.load(std::memory_order_relaxed);
+    uint16_t wp = writePtr.load(std::memory_order_acquire);
+    
+    // Check if buffer is empty
+    if (rp == wp) {
+        return false;
+    }
+    
+    // Copy message from buffer
+    msg = buffer[rp];
+    
+    // Update read pointer (release semantics)
+    readPtr.store((rp + 1) % BUFFER_SIZE, std::memory_order_release);
+    return true;
+}
+
+uint8_t Logger::getFillLevel() const
+{
+    uint16_t wp = writePtr.load(std::memory_order_relaxed);
+    uint16_t rp = readPtr.load(std::memory_order_relaxed);
+    
+    uint16_t count;
+    if (wp >= rp) {
+        count = wp - rp;
+    } else {
+        count = BUFFER_SIZE - rp + wp;
+    }
+    
+    return static_cast<uint8_t>((count * 100) / BUFFER_SIZE);
+}
+
+bool Logger::hasOverflowed() const
+{
+    return overflowFlag.load(std::memory_order_acquire);
+}
+
+void Logger::clearOverflowFlag()
+{
+    overflowFlag.store(false, std::memory_order_release);
+}
+
+uint32_t Logger::getTotalMessagesWritten() const
+{
+    return totalWritten.load(std::memory_order_relaxed);
+}
+
+uint32_t Logger::getTotalMessagesLost() const
+{
+    return totalLost.load(std::memory_order_relaxed);
+}
+
+}  // namespace Utils
 //        return;
 //    }
 //    const uint16_t len = strlen(msg);

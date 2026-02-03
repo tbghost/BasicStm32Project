@@ -28,8 +28,6 @@ math(EXPR CHECKSUM_START "${FLASHIDAREA_START} + ${FLASHIDAREA_SIZE} - ${CHECKSU
 math(EXPR APP_SIZE "${FLASH_SIZE} - ${FLASHVTABLE_SIZE} - ${FLASHIDAREA_SIZE} - ${CHECKSUM_SIZE} " OUTPUT_FORMAT HEXADECIMAL)            
 math(EXPR APP_START "${FLASH_START} + ${FLASHVTABLE_SIZE} + ${FLASHIDAREA_SIZE} + ${CHECKSUM_SIZE}" OUTPUT_FORMAT HEXADECIMAL)
 
-#add_compile_definitions(FLASH_START=${FLASH_START})
-#add_compile_definitions(FLASH_LENGTH=${FLASH_LENGTH})
 
 message (" ")
 message ("---------- Environment ---------------")     
@@ -67,18 +65,16 @@ math(EXPR RAMVTABLE_START "${RAM_D1_START}" OUTPUT_FORMAT HEXADECIMAL) # addr 0x
 math(EXPR RAMVTABLE_SIZE  "0x300" OUTPUT_FORMAT HEXADECIMAL)        # 768 B 
 
 ## NOINIT Area ##
-math(EXPR NOINIT_SIZE            "0x100" OUTPUT_FORMAT HEXADECIMAL)                  # 256 B 
-math(EXPR NOINIT_START           "${RAMVTABLE_START} + ${RAMVTABLE_SIZE}" OUTPUT_FORMAT HEXADECIMAL) # addr 0x24000300    
+math(EXPR NOINIT_SIZE     "0x100" OUTPUT_FORMAT HEXADECIMAL)                  # 256 B 
+math(EXPR NOINIT_START    "${RAMVTABLE_START} + ${RAMVTABLE_SIZE}" OUTPUT_FORMAT HEXADECIMAL) # addr 0x24000300    
 
 ## RAM Stack ##
 math(EXPR STACKSIZE       "0x800" OUTPUT_FORMAT HEXADECIMAL)                 # 2048 B      
 math(EXPR STACKSTART      "${RAM_D1_START} + ${RAM_D1_SIZE} - ${STACKSIZE}" OUTPUT_FORMAT HEXADECIMAL)   
 
-math(EXPR RAM_D1_APPSIZE         "${RAM_D1_SIZE} - ${RAMVTABLE_SIZE} - ${NOINIT_SIZE} - ${STACKSIZE}" OUTPUT_FORMAT HEXADECIMAL)
-math(EXPR RAM_D1_APPSTART        "${NOINIT_START} + ${NOINIT_SIZE}" OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR RAM_D1_APPSIZE  "${RAM_D1_SIZE} - ${RAMVTABLE_SIZE} - ${NOINIT_SIZE} - ${STACKSIZE}" OUTPUT_FORMAT HEXADECIMAL)
+math(EXPR RAM_D1_APPSTART "${NOINIT_START} + ${NOINIT_SIZE}" OUTPUT_FORMAT HEXADECIMAL)
 
-#math(EXPR DATA_RAM_START "0x20000000" OUTPUT_FORMAT HEXADECIMAL)
-#math(EXPR DATA_RAM_LENGTH "0x20000" OUTPUT_FORMAT HEXADECIMAL)
 message ("----------------------------------------------")     
 message ("-- DTCMRAM_START:       ${DTCMRAM_START}")
 message ("-- DTCMRAM_SIZE:        ${DTCMRAM_SIZE}")
@@ -91,8 +87,8 @@ message ("-- RAM_D2_SIZE:         ${RAM_D2_SIZE}")
 message ("-- RAM_D3_START:        ${RAM_D3_START}")
 message ("-- RAMVTABLE_START:     ${RAMVTABLE_START}")
 message ("-- RAMVTABLE_SIZE:      ${RAMVTABLE_SIZE}")
-message ("-- NOINIT_START:         ${NOINIT_START}")
-message ("-- NOINIT_SIZE:          ${NOINIT_SIZE}")
+message ("-- NOINIT_START:        ${NOINIT_START}")
+message ("-- NOINIT_SIZE:         ${NOINIT_SIZE}")
 message ("-- STACKSTART:          ${STACKSTART}")
 message ("-- STACKSIZE:           ${STACKSIZE}")
 message ("-- RAM_D1_APPSTART:     ${RAM_D1_APPSTART}")
@@ -106,6 +102,7 @@ set(SOURCES
     ${CMAKE_SOURCE_DIR}/hal/main.cpp
     ${CMAKE_SOURCE_DIR}/os/posix/posix.cpp
     ${CMAKE_SOURCE_DIR}/os/posix/time.cpp
+    ${CMAKE_SOURCE_DIR}/os/startup/tx_initialize_low_level.S
     )
 ################################################################################
 # Global Includes
@@ -141,7 +138,7 @@ add_executable(${EXECUTABLE} ${SOURCES})
 target_link_libraries(${EXECUTABLE} PRIVATE
           Utils
           HAL          
-#          threadx
+          threadx
           )
 
 set_target_properties(${EXECUTABLE} PROPERTIES

@@ -9,7 +9,7 @@
 
 # Build locations
 /build*
-
+/analyze
 # This project is using vscode as IDE by default. The vs-code folder shall be
 # under version control, even if there is a global ignore somewhere.
 !/.vscode/

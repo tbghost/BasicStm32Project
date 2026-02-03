@@ -15,7 +15,7 @@
       "device": "STM32H743ZI",
       "interface": "swd",
       //"runToEntryPoint": "Reset_Handler",
-      "runToEntryPoint": "IsrReset",
+      //"runToEntryPoint": "IsrReset",
       "stopAtEntry": true,
       "showDevDebugOutput": "raw",
       "showDevDebugTimestamps": true,

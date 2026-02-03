@@ -75,7 +75,8 @@ list(APPEND target_vfp_conf "-mfloat-abi=hard"              # use hardware float
                             )
 
 # Options for ASM only
-list(APPEND compiler_options_asm "SHELL:-x assembler-with-cpp")   # enable preprocessor for ASM files
+list(APPEND compiler_options_asm "SHELL:-x assembler-with-cpp"   # enable preprocessor for ASM files
+                                 "-g")                           # include debug symbols
 
 # Options for C only
 list(APPEND compiler_options_c   "")
@@ -115,7 +116,8 @@ list(APPEND compiler_defines_all "${CFG_FLAGS}"
 
 # Options for the linker
 list(APPEND linker_options       "-Wl,--gc-sections"        # remove unused sections
-                                 "-Wl,--build-id=none"      # do not generate a build-id 
+                                 "-Wl,--build-id=none"      # do not generate a build-id
+                                 "-g"                       # keep debug symbols
                                  #"-nostartfiles"           # use standard startfiles _linker_start   
                                  #"-nostdlib"               # use standard libraries memcopy
                                  "-static"                  # link statically

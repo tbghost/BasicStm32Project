@@ -1,19 +1,13 @@
 #include <stdint.h>
 #include "hal_init.h"
+#include "Logger.hpp"
+#include "UartLogger.hpp"
 
 extern "C" {
 #include "tx_api.h"
 #include "posix.hpp"
 
-/* ThreadX low-level initialization function */
-void _tx_initialize_low_level(void)
-{
-    /* Disable interrupts during ThreadX initialization */
-    __asm__ volatile("CPSID i");
-    
-    /* Provide system stack pointer initialization if needed */
-    /* The ThreadX library will handle the rest */
-}
+using namespace Utils;
 
 /**
  * @brief Main application thread function using POSIX interface
@@ -23,14 +17,24 @@ void main_app_thread_entry(void* arg)
 {
     (void)arg;
     
+    int iteration = 0;
+    
     /* Main application loop */
     while(1)
     {
+        /* Process logger messages */
+        UartLogger::processMessages();
+        
         /* Application code runs here */
-        /* For example: blink LED, process data, etc. */
+        iteration++;
+        Logger::info("Main thread running...");
         
         /* Yield to other threads - POSIX compatible sleep */
-        usleep(100000);  /* 100 ms in microseconds */
+        int ret = usleep(100000);  /* 100 ms in microseconds */
+        if (ret != 0) {
+            Logger::error("usleep failed");
+            error_handler_reset(ERROR_THREADX_INIT_FAILED);
+        }
     }
 }
 
@@ -60,10 +64,15 @@ int main()
   /* Initialize HAL */
   hal_init();
   
+  /* Initialize Logger with UART output */
+  UartLogger::init();
+  Logger::info("ThreadX starting...");
+  
   /* Enter ThreadX kernel */
   tx_kernel_enter();
   
   /* If tx_kernel_enter() returns, something went wrong */
+  Logger::critical("ThreadX kernel exited!");
   error_handler_reset(ERROR_THREADX_INIT_FAILED);
   
   /* This line should never be reached */

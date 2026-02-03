@@ -6,6 +6,9 @@
 set(HAL_DRIVER_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/hal_driver/Src/stm32h7xx_hal.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hal_driver/Src/stm32h7xx_hal_rcc.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hal_driver/Src/stm32h7xx_hal_rcc_ex.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hal_driver/Src/stm32h7xx_hal_gpio.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/hal_driver/Src/stm32h7xx_hal_uart.c
     ${CMAKE_CURRENT_SOURCE_DIR}/hal_driver/Src/stm32h7xx_ll_utils.c
     )
 
@@ -16,12 +19,13 @@ set(SYSTEM_SRC
     ${CMAKE_CURRENT_SOURCE_DIR}/system/system_stm32h7xx.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/hal_init.c
     ${CMAKE_CURRENT_SOURCE_DIR}/system/error_handler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/system/UartLogger.cpp
     
     )
 
-set(CMSIS_SRC
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Device/ST/STM32H7xx/Source/Templates/system_stm32h7xx.c
-    )
+#set(CMSIS_SRC
+    #${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Device/ST/STM32H7xx/Source/Templates/system_stm32h7xx.c
+#    )
 
 set(STARTUP_SRC
     #${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Device/ST/STM32H7xx/Source/Templates/arm/startup_stm32h743xx.s
@@ -34,7 +38,7 @@ add_library(HAL
             STATIC
             ${HAL_DRIVER_SRC}
             ${SYSTEM_SRC}
-            ${CMSIS_SRC}
+            #${CMSIS_SRC}
             ${STARTUP_SRC}
             )
 
@@ -46,7 +50,6 @@ target_include_directories(HAL
             ${CMAKE_CURRENT_SOURCE_DIR}/system
             ${CMAKE_CURRENT_SOURCE_DIR}/cmsis/include
             ${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Core/include
-            ${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Core_A/include
             ${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Device/ST/STM32H7xx/include
             ${CMAKE_CURRENT_SOURCE_DIR}/startup
             )

@@ -6,7 +6,7 @@ brief : Cortex M7 linker file for STM32H743ZI.
 */
 
 /* Global entry point */
-ENTRY(IsrReset)
+ENTRY(Reset_Handler)
 
 /* Flash */
 FLASH_START     =   0x08000000;
@@ -77,6 +77,8 @@ MEMORY
 _estack = RAM_D1_STACKSTART + RAM_D1_STACKSIZE;        /* end of RAM_D1 */
 _Min_Heap_Size = 0x200;                    /* required minimum amount of heap, currently this is just a placeholder  */
 _Min_Stack_Size = RAM_D1_STACKSIZE;        /* required amount of system stack */
+_vectors = FLASHVTABLE_START;              /* Vector table address for ThreadX */
+__RAM_segment_used_end__ = NOINIT_START;   /* End of used RAM for ThreadX initialization */
 
 
 /* Output sections */
