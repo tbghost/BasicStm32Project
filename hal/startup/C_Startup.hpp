@@ -32,10 +32,10 @@ class C_StartUp
     public:
 
         /**
-        * @fn C_StartUp::Reset_Handler
-        * @brief Reset handler function. Called via IRQ vector on every system reset.
+        * @fn C_StartUp::System_Init
+        * @brief Init handler function. Called via IRQ vector on every system reset.
         */
-        static void Reset_Handler();
+        static void System_Init();
        
     
     private:
@@ -48,6 +48,13 @@ class C_StartUp
         * @brief Destructor not needed because its a static class.
         */
         ~C_StartUp() = delete;
+
+
+        /**
+        * @fn C_StartUp::InitDataSegment
+        * @brief Initializes the .data segment by copying from flash to RAM.
+        */
+        static void InitClk();
 
         /**
         * @fn C_StartUp::InitDataSegment

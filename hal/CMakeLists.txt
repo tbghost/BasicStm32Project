@@ -29,7 +29,9 @@ set(SYSTEM_SRC
 
 set(STARTUP_SRC
     #${CMAKE_CURRENT_SOURCE_DIR}/cmsis/Device/ST/STM32H7xx/Source/Templates/arm/startup_stm32h743xx.s
-    ${CMAKE_CURRENT_SOURCE_DIR}/startup/startup_stm32h743zitx.s
+    #${CMAKE_CURRENT_SOURCE_DIR}/startup/startup_stm32h743zitx.s
+    ${CMAKE_CURRENT_SOURCE_DIR}/startup/C_Startup.cpp
+    #${CMAKE_CURRENT_SOURCE_DIR}/system/System.cpp
     )
 
 

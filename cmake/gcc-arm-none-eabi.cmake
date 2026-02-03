@@ -10,7 +10,6 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)     # Verhindert, dass CMake a
 
 
 # Pfad zum linkerfile
-#set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/hal/startup/STM32H743ZITX_FLASH.ld)
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/hal/startup/stm32h7_linkerscript.ld)
 
 # Pfad zur ARM-Toolchain (anpassen, falls nötig)

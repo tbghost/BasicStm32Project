@@ -2,7 +2,7 @@
     "window.zoomLevel": -0.2,
     "window.title": "${rootName}${separator}${activeEditorShort}",
     "window.titleBarStyle": "default",
-    "workbench.colorTheme": "Default Light Modern",
+    "workbench.colorTheme": "Light Modern",
     "workbench.colorCustomizations": {
         // BRACKET PAIR
         "editorIndentGuide.activeBackground1": "#b8cacad2",

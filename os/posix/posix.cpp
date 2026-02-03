@@ -11,6 +11,10 @@ extern "C" {
 
 int pthread_create(pthread_t* t, void*, void (*fn)(void*), void* arg)
 {
+    if (pthread_count >= 16) {
+        return -1;  /* Stack array overflow */
+    }
+    
     uint8_t* stack = pthread_stacks[pthread_count];
     pthread_count++;
     
